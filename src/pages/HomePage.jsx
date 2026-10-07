@@ -1,7 +1,9 @@
+import { useLocation } from "react-router";
 import { useFetch } from "../hooks/useFetch";
 import { API_URL } from "../config";
 
 export const HomePage = () => {
+  const { state } = useLocation();
   const { data, isLoading, error } = useFetch(`${API_URL}/articles`);
 
   const articles = (data ?? []).filter(
@@ -13,7 +15,11 @@ export const HomePage = () => {
       <h1 className="mb-6 text-3xl font-bold text-slate-900">
         Artículos publicados
       </h1>
-
+      {state?.message && (
+        <p className="mb-4 rounded-md bg-teal-50 p-3 text-sm text-teal-800">
+          {state.message}
+        </p>
+      )}
       {isLoading && (
         <p className="animate-pulse text-slate-500">Cargando artículos...</p>
       )}
