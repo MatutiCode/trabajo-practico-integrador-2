@@ -1,15 +1,51 @@
-import { Link } from "react-router";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router";
 import { useForm } from "../hooks/useForm";
+import { API_URL } from "../config";
+import { getErrorMessages } from "../helpers/errors";
+
+const initialValues = {
+  username: "",
+  email: "",
+  password: "",
+};
 
 export const RegisterPage = () => {
-  const { formState, handleInputChange } = useForm({
-    username: "",
-    email: "",
-    password: "",
-  });
+  const navigate = useNavigate();
+  const { formState, handleInputChange, handleReset } = useForm(initialValues);
 
-  const handleSubmit = (event) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState([]);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
+    setErrors([]);
+
+    try {
+      const response = await fetch(`${API_URL}/auth/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify(formState),
+      });
+      const body = await response.json().catch(() => null);
+
+      if (!response.ok) {
+        setErrors(getErrorMessages(response.status, body));
+        return;
+      }
+
+      handleReset();
+      navigate("/login", {
+        state: { message: "Registro exitoso. Ya podés iniciar sesión." },
+      });
+    } catch (error) {
+      console.error(error);
+      setErrors(["No se pudo conectar con el servidor."]);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -48,11 +84,20 @@ export const RegisterPage = () => {
           className="rounded-md border border-slate-300 px-3 py-2 focus:border-teal-600 focus:outline-none"
         />
 
+        {errors.length > 0 && (
+          <ul className="rounded-md bg-red-50 p-3 text-sm text-red-700">
+            {errors.map((message) => (
+              <li key={message}>{message}</li>
+            ))}
+          </ul>
+        )}
+
         <button
           type="submit"
-          className="rounded-md bg-teal-700 px-3 py-2 font-medium text-white hover:bg-teal-800"
+          disabled={isLoading}
+          className="rounded-md bg-teal-700 px-3 py-2 font-medium text-white hover:bg-teal-800 disabled:opacity-50"
         >
-          Registrarme
+          {isLoading ? "Registrando..." : "Registrarme"}
         </button>
       </form>
 
