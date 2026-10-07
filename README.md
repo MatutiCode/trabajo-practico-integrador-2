@@ -6,10 +6,6 @@ Frontend en React + Vite + Tailwind CSS del **Sistema de Gestión de Blog Person
 
 Repositorio del backend (TP Integrador N° I): https://github.com/MatutiCode/trabajo-practico-integrador-1
 
-El backend debe tener:
-
-- CORS habilitado para `http://localhost:5173` con `credentials: true`.
-- El endpoint `POST /api/auth/logout`, que limpia la cookie `token`.
 
 ## Cómo levantar el proyecto
 
@@ -41,22 +37,3 @@ npm run dev
 4. Abrir `http://localhost:5173`.
 
 Si el backend corre en otro puerto, cambiar `API_URL` en `src/config.js`.
-
-## Tecnologías
-
-React, Vite, react-router y Tailwind CSS v4. Las peticiones se hacen solo con `fetch` (con `credentials: "include"`).
-
-## Estructura
-
-```
-src/
-├── components/   Navbar.jsx
-├── hooks/        useFetch.js, useForm.js
-├── pages/        HomePage.jsx, LoginPage.jsx, RegisterPage.jsx
-├── router/       AppRouter.jsx, PrivateRoutes.jsx, PublicRoutes.jsx
-├── helpers/      auth.js, errors.js
-├── config.js
-├── App.jsx
-├── index.css
-└── main.jsx
-```
