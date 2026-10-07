@@ -1,16 +1,62 @@
-# React + Vite
+# Trabajo Práctico Integrador N° II
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend en React + Vite + Tailwind CSS del **Sistema de Gestión de Blog Personal con Autenticación** (Trabajo Práctico Integrador N° I).
 
-Currently, two official plugins are available:
+## Backend utilizado
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Repositorio del backend (TP Integrador N° I): https://github.com/MatutiCode/trabajo-practico-integrador-1
 
-## React Compiler
+El backend debe tener:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- CORS habilitado para `http://localhost:5173` con `credentials: true`.
+- El endpoint `POST /api/auth/logout`, que limpia la cookie `token`.
 
-## Expanding the ESLint configuration
+## Cómo levantar el proyecto
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. Levantar el backend del TP Integrador N° I (por defecto en `http://localhost:3000`):
+
+```bash
+git clone https://github.com/MatutiCode/trabajo-practico-integrador-1.git
+cd trabajo-practico-integrador-1
+npm install
+npm run dev
+```
+
+(Completar el archivo `.env` según `.env.example`.)
+
+2. En otra terminal, clonar este repositorio e instalar las dependencias:
+
+```bash
+git clone https://github.com/MatutiCode/trabajo-practico-integrador-2.git
+cd trabajo-practico-integrador-2
+npm install
+```
+
+3. Iniciar el servidor de desarrollo:
+
+```bash
+npm run dev
+```
+
+4. Abrir `http://localhost:5173`.
+
+Si el backend corre en otro puerto, cambiar `API_URL` en `src/config.js`.
+
+## Tecnologías
+
+React, Vite, react-router y Tailwind CSS v4. Las peticiones se hacen solo con `fetch` (con `credentials: "include"`).
+
+## Estructura
+
+```
+src/
+├── components/   Navbar.jsx
+├── hooks/        useFetch.js, useForm.js
+├── pages/        HomePage.jsx, LoginPage.jsx, RegisterPage.jsx
+├── router/       AppRouter.jsx, PrivateRoutes.jsx, PublicRoutes.jsx
+├── helpers/      auth.js, errors.js
+├── config.js
+├── App.jsx
+├── index.css
+└── main.jsx
+```
